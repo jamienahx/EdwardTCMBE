@@ -3,7 +3,7 @@ module.exports = [
     english_name: "First Consultation",
     chinese_name: "初诊",
     starting_price: "$28",
-    description: "",
+    description: "Test1234",
     category: "Consultation"
   },
 
