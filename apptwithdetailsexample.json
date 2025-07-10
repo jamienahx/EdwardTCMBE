@@ -1,0 +1,22 @@
+{
+  "message": "Appointment found",
+  "appointment": {
+    "_id": "60d22f1d98db4e05a63c6e23",
+    "date": "2025-07-09",
+    "time": "10:30",
+    "treatments": [
+      "60c72b2f9e1d4e9b9a8a2a1a",   
+      "60c72b2f9e1d4e9b9a8a2a2b"
+    ],
+    "treatmentDetails": [         
+      {
+        "name": "Moxibustion(partial)",
+        "price": "$42"
+      },
+      {
+        "name": "Cupping(partial)",
+        "price": "$28"
+      }
+    ]
+  }
+}
