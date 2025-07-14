@@ -11,11 +11,11 @@
     "treatmentDetails": [         
       {
         "name": "Moxibustion(partial)",
-        "price": "$42"
+        "price": "42"
       },
       {
         "name": "Cupping(partial)",
-        "price": "$28"
+        "price": "28"
       }
     ]
   }
