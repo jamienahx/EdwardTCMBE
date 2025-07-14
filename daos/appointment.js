@@ -1,14 +1,11 @@
 const mongoose = require("mongoose");
 
 const appointmentSchema = new mongoose.Schema({
-  date: { type: String, required: true },        
+  name: {type: String},
+
+  date: { type: Date, required: true },        
   time: { type: String, required: true },  
   
-  customerInfo: {
-    email: { type: String},  //FE ensures that either email or phone are provided, otherwise form will not submit.
-    phone: { type: String},
-  },
-
   consultationType: {
     type: String,
     enum: ['first', 'follow-up'],

@@ -13,10 +13,20 @@ async function addAppointment(req, res) {
     const appointment = await appointmentModel.createAppointment(req.body);
 
     //return response with the appointment data
-    res.json({ message: "Appointment created", appointment });
+    res.status(201).json({ message: "Appointment created", appointment });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Error creating appointment" });
+  
+    //return the specific error messages from model layer
+    if (err.message === "No treatments selected") {
+      return res.status(400).json({message: "No treatments selected. Please choose at least one treatment." });
+      }
+
+    if (err.message === "No treatments found for the provided names.") {
+      return res.status(400).json({message: "No matching treatments found for the provided names." });
+      }
+
+      res.status(500).json({ message: "Error creating appointment: " + err.message });
   }
 
 }
@@ -44,9 +54,10 @@ if (!appointment) {
 //return the appointment to the FE
 res.json({message: "Appointment found", appointment});
 } catch (err) {
-    console.error(err)
+    console.error(err);
 
-res.status(500).json({ message: "Error fetching appointment details" });
+
+res.status(500).json({ message: "Error fetching appointment details: " + err.message});
     
 }
 
