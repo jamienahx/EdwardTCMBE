@@ -1,10 +1,10 @@
-require("dotenv").config();
+require("dotenv").server();
 const mongoose = require("mongoose");
 const Service = require("./daos/service");
 const servicesData = require("./data/servicesData");
 
 
-async function importServices() {
+const importServices=async()=> {
   try {
     await mongoose.connect(process.env.DATABASE_URL);
     console.log("MongoDB connected");
