@@ -38,29 +38,27 @@ const onError=(error)=> {
     ? 'Pipe ' + port
     : 'Port ' + port;
 
-  // handle specific listen errors with friendly messages
+  //Running without admin permission
   switch (error.code) {
     case 'EACCES':
       console.error(bind + ' requires elevated privileges');
       process.exit(1);
       break;
+  //Running if its used by a
     case 'EADDRINUSE':
       console.error(bind + ' is already in use');
       process.exit(1);
       break;
+    //if its other unexpected error
     default:
       throw error;
   }
 }
 
-/**
- * Event listener for HTTP server "listening" event.
- */
-
-function onListening() {
-  var addr = server.address();
+const onListening=()=> {
+  var addr = server.address(); //naming port number
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  debug('Listening on ' + bind); //logs message
 }

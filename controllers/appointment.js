@@ -1,13 +1,5 @@
 const appointmentModel = require('../models/appointment');
-
-module.exports = {
-  addAppointment,
-  getAppointmentWithDetails
-};
-
-//add appointments
-
-async function addAppointment(req, res) {
+const addAppointment= async (req, res)=> {
   try {
     //create an appt using the data from request body/FE (createAppointment is in the models file)
     const appointment = await appointmentModel.createAppointment(req.body);
@@ -33,7 +25,7 @@ async function addAppointment(req, res) {
 
 //Fetch the appointment with details to give to the front end (performed in the models file) BE will send ALL details, FE can choose which fields to display.
 //fetchappointmentwith details is in the models file
-async function getAppointmentWithDetails(req, res) {
+const getAppointmentWithDetails=async(req, res)=> {
 
 
 try {

@@ -17,16 +17,16 @@ var usersRouter = require('./routes/users');
 var appointmentRouter = require('./routes/appointment');
 var serviceRouter = require('./routes/service');
 var app = express();
-db.on("connected", function () {
-  console.log(`Connected to MongoDB ${db.name} at ${db.host}:${db.port}`);
-});
-
 //dotenv to be found in database
 //middleware
 mongoose.set("debug", true);
 mongoose.connect(process.env.DATABASE_URL);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+db.on("connected", function () {
+  console.log(`Connected to MongoDB ${db.name} at ${db.host}:${db.port}`);
+});
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -58,15 +58,9 @@ app.use((err, req, res, next)=> {
 });
 
 //test environment
-
-
-
-
-
-
-
-
-
+app.listen(3000, () => {
+  console.log('Test environment is ready for launch!');
+})
 
 //deployment to bin
 module.exports = app;
