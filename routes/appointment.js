@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 //import the controller 
-const appointmentController = require('../controllers/appointment');
+const appointmentController = require('../controllers/appointmentController');
 
 
 //define routes

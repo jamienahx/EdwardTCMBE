@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Service = require("../daos/service");
+const Service = require("../schema/service");
 
 
 //get all services

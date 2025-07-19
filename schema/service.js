@@ -11,7 +11,5 @@ const serviceSchema = new mongoose.Schema({
     required: true
   }
 });
-
-
 // By convention, the name of the Model is singular and UpperCamelCased
 module.exports = mongoose.model("Service", serviceSchema);
