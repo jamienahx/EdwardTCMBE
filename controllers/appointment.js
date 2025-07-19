@@ -50,11 +50,12 @@ res.json({message: "Appointment found", appointment});
 
 
 res.status(500).json({ message: "Error fetching appointment details: " + err.message});
-    
 }
-
 }
-
 //FE can show something like:
     //  const treatments = appointment.treatments.map(treatment => treatment.english_name).join(", ");
       //const message = `Hi, you have booked ${treatments} at ${appointment.time} on ${appointment.date}.`;
+module.exports = {
+    addAppointment,
+    getAppointmentWithDetails,
+}; 
