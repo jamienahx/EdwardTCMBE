@@ -1,90 +1,64 @@
-#!/usr/bin/env node
-
-/**
- * Module dependencies.
- */
-
+//Actual use in web
 var app = require('../server');
 var debug = require('debug')('edwardtcmbe:server');
 var http = require('http');
-
-/**
- * Get port from environment and store in Express.
- */
-
+//use either 3000 for test run or PORT in environment
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
-
-/**
- * Create HTTP server.
- */
-
+//create server in http
 var server = http.createServer(app);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-
+//listen to port
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-
-/**
- * Normalize a port into a number, string, or false.
- */
-
-function normalizePort(val) {
+//conversion of port to number, if string, convert to number + string
+normalizePort=(val)=> {
   var port = parseInt(val, 10);
-
   if (isNaN(port)) {
     // named pipe
     return val;
   }
-
+  //logic continues here if its number
   if (port >= 0) {
     // port number
     return port;
   }
-
+  //returns false if its special charcters
   return false;
 }
-
-/**
- * Event listener for HTTP server "error" event.
- */
-
-function onError(error) {
+//error handling
+//check if app is listening
+const onError=(error)=> {
   if (error.syscall !== 'listen') {
     throw error;
   }
-
+//checking if port is string, if it's string, return pipe port name, else return port port number,
+//e.g pipe abc or port 3000
   var bind = typeof port === 'string'
     ? 'Pipe ' + port
     : 'Port ' + port;
 
-  // handle specific listen errors with friendly messages
+  //Running without admin permission
   switch (error.code) {
     case 'EACCES':
       console.error(bind + ' requires elevated privileges');
       process.exit(1);
       break;
+  //Running if its used by a
     case 'EADDRINUSE':
       console.error(bind + ' is already in use');
       process.exit(1);
       break;
+    //if its other unexpected error
     default:
       throw error;
   }
 }
 
-/**
- * Event listener for HTTP server "listening" event.
- */
-
-function onListening() {
-  var addr = server.address();
+const onListening=()=> {
+  var addr = server.address(); //naming port number
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  debug('Listening on ' + bind); //logs message
 }
