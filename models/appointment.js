@@ -2,15 +2,9 @@
 const servicedao = require("../daos/service"); 
 //require appointment from appointment schema
 const appointmentdao = require("../daos/appointment");
-
-module.exports = {
-    createAppointment,
-    fetchAppointmentWithDetails
-}; 
-
 //create the  appointment
 
-async function createAppointment(data) { //data that is passed in from the FE thru controller file. contains date time, senior citizen etc...
+const createAppointment=async(data)=> { //data that is passed in from the FE thru controller file. contains date time, senior citizen etc...
 
 try {
     // take the category and name from whatever the user has provided
@@ -19,7 +13,6 @@ const selectedTreatments = data.treatments //this is an array received from the 
 //error handler to snrure no empty treatment fields
 if(!selectedTreatments || selectedTreatments.length === 0){
     throw new Error("No treatments selected");
-
 }
 
 //do a VLOOKUP into the service schema using the name and category
@@ -51,7 +44,7 @@ const appointment = await appointmentdao.create({
 }
 
 //Fetch the appointment details with treatment info to give this to the FE
-async function fetchAppointmentWithDetails(appointmentId) {
+const fetchAppointmentWithDetails= async (appointmentId)=> {
 
 try {
 
@@ -85,3 +78,7 @@ try {
 }
 }
 
+module.exports = {
+    createAppointment,
+    fetchAppointmentWithDetails
+}; 
