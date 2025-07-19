@@ -16,6 +16,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var appointmentRouter = require('./routes/appointment');
 var serviceRouter = require('./routes/service');
+var dashboardRouter = require('./routes/dashboard');
+var securityMiddleware = require('./middlewares/security');
 var app = express();
 //dotenv to be found in database
 //middleware
@@ -34,12 +36,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
+app.use(securityMiddleware.checkJWT); 
 
 //route handling
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/appointment',appointmentRouter);
 app.use('/services', serviceRouter);
+app.use('/dashboard', dashboardRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next)=> {
