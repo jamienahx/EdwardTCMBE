@@ -6,8 +6,11 @@ const appointmentController = require('../controllers/appointmentController');
 
 
 //define routes
-router.post('/', appointmentController.addAppointment);
+router.post('/createAppointment', appointmentController.createAppointmentFinal);
 
-router.get('/:appointmentId',appointmentController.getAppointmentWithDetails);
+
+
+router.get('/',appointmentController.fetchAppointmentFinal);
+router.get('/:appointmentId',appointmentController.fetchAppointmentParamsFinal);
 
 module.exports = router;
