@@ -20,6 +20,19 @@ const createAppointmentFinal= async (req, res)=> {
   }
 }
 
+const deleteAppointmentFinal=async (req,res)=> {
+    try{
+        const {appointmentId} = req.params
+        const deletedAppointment = await appointmentModel.deleteAppointment(appointmentId);
+        if (!deletedAppointment) {
+            return res.status(404).json({message: 'Appointment not found'});
+        }
+        res.json({message: "appointment deleted successfully"});
+    } catch(err){
+        res.status(500).json({message: err.message});
+    }
+}
+
 const fetchAppointmentFinal=async(req, res)=> {
 try {
     const allAppointments = await appointmentModel.fetchAppointment();
@@ -51,6 +64,7 @@ res.status(500).json({ message: "Error fetching appointment details: " + err.mes
 }
 module.exports = {
     createAppointmentFinal,
+    deleteAppointmentFinal,
     fetchAppointmentFinal,
     fetchAppointmentParamsFinal,
 }; 

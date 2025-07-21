@@ -7,7 +7,7 @@ const appointmentController = require('../controllers/appointmentController');
 
 //define routes
 router.post('/createAppointment', appointmentController.createAppointmentFinal);
-
+router.delete('/deleteAppointment/:appointmentId', appointmentController.deleteAppointmentFinal);
 
 
 router.get('/',appointmentController.fetchAppointmentFinal);

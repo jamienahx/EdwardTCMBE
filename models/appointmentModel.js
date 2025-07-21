@@ -45,6 +45,10 @@
     }   
     }
 
+  const deleteAppointment= async (appointmentId)=> {
+    const deletedAppointmentId = await appointmentSchema.findByIdAndDelete(appointmentId);
+    return deletedAppointmentId;
+  }
     // Fetch the appointment details with treatment info to give this to the FE
     const fetchAppointment = async () => {
   try {
@@ -104,6 +108,7 @@
 
     module.exports = {
         createAppointment,
+        deleteAppointment,
         fetchAppointment,
         fetchAppointmentParams,
     }; 
