@@ -1,7 +1,8 @@
+//appointmentController.js
 //Logic to interact with App
 const appointmentModel = require('../models/appointmentModel');
 //addAppointment logic
-const addAppointment= async (req, res)=> {
+const createAppointmentFinal= async (req, res)=> {
   try {
     const appointment = await appointmentModel.createAppointment(req.body);
     //return response with the appointment data
@@ -18,16 +19,26 @@ const addAppointment= async (req, res)=> {
       res.status(500).json({ message: "Error creating appointment: " + err.message });
   }
 }
+
+const fetchAppointmentFinal=async(req, res)=> {
+try {
+    const allAppointments = await appointmentModel.fetchAppointment();
+    res.json(allAppointments);
+} catch (error) {
+res.status(500).json({message: error.message});
+}
+}
+
 //Fetch the appointment with details to give to the front end (performed in the models file) BE will send ALL details, FE can choose which fields to display.
 //fetchappointmentwith details is in the models file
-const getAppointmentWithDetails=async(req, res)=> {
+const fetchAppointmentParamsFinal=async(req, res)=> {
 try {
 //get the appointment ID 
 //get appt ID from route params. have to set this up in the routes file. 
 //GET /appointments/60c72b2f9e1d4e9b9a8a2a1a
 const {appointmentId} = req.params
 //get the rest of the appointment details using the appointment ID
-const appointment = await appointmentModel.fetchAppointmentWithDetails(appointmentId);
+const appointment = await appointmentModel.fetchAppointmentParams(appointmentId);
 if (!appointment) {
       return res.status(404).json({ message: "Appointment not found" });
     }
@@ -38,10 +49,8 @@ res.json({message: "Appointment found", appointment});
 res.status(500).json({ message: "Error fetching appointment details: " + err.message});
 }
 }
-//FE can show something like:
-//  const treatments = appointment.treatments.map(treatment => treatment.english_name).join(", ");
-//const message = `Hi, you have booked ${treatments} at ${appointment.time} on ${appointment.date}.`;
 module.exports = {
-    addAppointment,
-    getAppointmentWithDetails,
+    createAppointmentFinal,
+    fetchAppointmentFinal,
+    fetchAppointmentParamsFinal,
 }; 
