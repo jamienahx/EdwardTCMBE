@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const appointmentSchema = new mongoose.Schema({
+  loyaltyPrice:{type: Number, required: true},
   name: {type: String},
   date: {type: String, required: true },        
   time: {type: String, required: true },  
@@ -8,7 +9,7 @@ const appointmentSchema = new mongoose.Schema({
     ref: 'Service',    
     required: true
   }],  //each appt can have multiple treatments, so we want to store this as an array of ObjectIDs where each ID corresponds to the ID in the treatments table.
-  multiplier:{type: Number},
+  multiplier:{type: Number, required: true},
   price:{type:Number},
   extraComments: { type: String },
 }, {
