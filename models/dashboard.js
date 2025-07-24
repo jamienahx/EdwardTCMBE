@@ -2,34 +2,51 @@
 const Appointment = require("../schema/appointmentSchema");
 
 async function getAppointmentsForToday() {
-  const today = new Date();  // Get current date
-const startOfDay = new Date(today);  // Copy today's date
-  startOfDay.setHours(0, 0, 0, 0);  // Start of today (midnight)
+    const today = new Date();  // Get current date
+    const startOfDay = new Date(today);  // Copy today's date
+    startOfDay.setHours(0, 0, 0, 0);  // Start of today (midnight)
 
-  const endOfDay = new Date(today);  // Copy today's date again
-  endOfDay.setHours(23, 59, 59, 999);  // End of today (11:59:59.999 PM)
+    const endOfDay = new Date(today);  // Copy today's date again
+    endOfDay.setHours(23, 59, 59, 999);  // End of today (11:59:59.999 PM)
 
-  // Format startOfDay and endOfDay to match dtring date format
-  const formattedStartDate = startOfDay.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
-  const formattedEndDate = endOfDay.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
+    // Format startOfDay and endOfDay to match string date format
+    const formattedStartDate = startOfDay.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
+    const formattedEndDate = endOfDay.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
 
-  try {
-    // select * from appointment where date between 12am and 11.59pm
-    const appointments = await Appointment.find({
-      date: {
-        //$gte greater than or equal to, $lte less than or equal to
-        $gte: formattedStartDate,
-        $lte: formattedEndDate
-      }
-    });
+    try {
+        // Fetch appointments for today within the date range
+        const appointments = await Appointment.find({
+            date: {
+                $gte: formattedStartDate,
+                $lte: formattedEndDate
+            }
+        })
+        .populate('treatments', 'english_name starting_price')  // Populate treatments with relevant fields
+        .exec();  // Execute the query
 
-    return appointments;
-  } catch (error) {
-    console.error("Error fetching appointments:", error);
-    throw error;
-  }
+        // Check if no appointments are found
+        if (!appointments || appointments.length === 0) {
+            throw new Error('No appointments found for today');
+        }
+
+      return appointments.map((appointment) => {
+            // Map treatments for each appointment
+            const simplifiedTreatments = appointment.treatments.map((element) => ({
+                name: element.english_name,  // `element` is each treatment inside `appointment.treatments`
+
+            }));
+
+            // Add simplified treatments to the appointment object
+            //appointment.changeTreatmentsToName = simplifiedTreatments;
+            
+            // Return the appointment with the new field
+            return appointment;
+        });
+} catch (err) {
+        console.error(err);
+        throw new Error(`Error fetching appointments for today: ${err.message}`);
+    }
 }
-
 module.exports = {
-  getAppointmentsForToday
+    getAppointmentsForToday
 };
