@@ -1,23 +1,21 @@
 //Look for dotenv
 var dotenv=require("dotenv")
 dotenv.config();
-//Connection to mongodb
 const mongoose = require("mongoose");
 const db = mongoose.connection;
 //error handling
 var createError = require('http-errors');
-
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
-var indexRouter = require('./routes/index');
+var indexRouter = require('./routes/index'); //generates HTML when used
 var usersRouter = require('./routes/users');
 var appointmentRouter = require('./routes/appointment');
 var serviceRouter = require('./routes/service');
 var dashboardRouter = require('./routes/dashboard');
-var securityMiddleware = require('./middlewares/security');
+var securityMiddleware = require('./middlewares/securityMiddleware');
 var serviceManagementRouter = require('./routes/serviceManagement');
 
 var app = express();
@@ -28,7 +26,7 @@ mongoose.connect(process.env.DATABASE_URL);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-db.on("connected", function () {
+db.on("connected", ()=> {
   console.log(`Connected to MongoDB ${db.name} at ${db.host}:${db.port}`);
 });
 
@@ -41,7 +39,7 @@ app.use(cors());
 app.use(securityMiddleware.checkJWT); 
 
 //route handling
-app.use('/', indexRouter);
+app.use('/', indexRouter); //generates HTML
 app.use('/users', usersRouter);
 app.use('/appointment',appointmentRouter);
 app.use('/services', serviceRouter);

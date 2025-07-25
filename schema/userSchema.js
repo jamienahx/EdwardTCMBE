@@ -8,7 +8,6 @@ const userSchema = new mongoose.Schema({
   jwt: {type: String},
   is_admin: {type: Boolean, default: false},
   name: {type:String},
-
 });
 
 // By convention, the name of the Model is singular and UpperCamelCased
