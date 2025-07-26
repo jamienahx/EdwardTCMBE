@@ -28,20 +28,8 @@ async function getAppointmentsForToday() {
         if (!appointments || appointments.length === 0) {
             throw new Error('No appointments found for today');
         }
-
-      return appointments.map((appointment) => {
-            // Map treatments for each appointment
-            const simplifiedTreatments = appointment.treatments.map((element) => ({
-                name: element.english_name,  // `element` is each treatment inside `appointment.treatments`
-
-            }));
-
-            // Add simplified treatments to the appointment object
-            //appointment.changeTreatmentsToName = simplifiedTreatments;
-            
-            // Return the appointment with the new field
             return appointment;
-        });
+       
 } catch (err) {
         console.error(err);
         throw new Error(`Error fetching appointments for today: ${err.message}`);
