@@ -74,10 +74,6 @@ In addition to revamping the front end user interface, an admin portal is create
 - Javascript CSS
 
 
-## ERD Diagrams
-
-
-
 ## Links 🔗
 - [Edward TCM Original Site](https://www.edwardtcm.com.sg/)
 - [Front End Repository](https://github.com/Axercute/Project_3)
