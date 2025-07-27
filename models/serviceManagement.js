@@ -22,12 +22,10 @@ const servicedao = require("../schema/service");
   async function deleteService(id) {
     const deleted = await servicedao.findByIdAndDelete(id);
     return deleted;
-
   }
 
 
   module.exports = {
-
     getAllServices,
     createService,
     updateService,
