@@ -23,10 +23,10 @@ async function getAppointmentsForToday() {
         })
         .populate('treatments', 'english_name starting_price')  // Populate treatments with relevant fields
         .exec();  // Execute the query
-
+        
         // Check if no appointments are found
-        if (!appointments || appointments.length === 0) {
-            throw new Error('No appointments found for today');
+       if (!appointments || appointments.length === 0) {
+            return []; // Instead of throwing an error, return an empty array
         }
 
       return appointments.map((appointment) => {
@@ -44,7 +44,7 @@ async function getAppointmentsForToday() {
         });
 } catch (err) {
         console.error(err);
-        throw new Error(`Error fetching appointments for today: ${err.message}`);
+       return [];
     }
 }
 module.exports = {
